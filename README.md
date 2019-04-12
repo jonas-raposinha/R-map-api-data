@@ -196,6 +196,20 @@ gg <- gg + labs(title=str_wrap("Regional antibiotics consumption in Sweden, all 
 
 ![plot 4](https://github.com/jonas-raposinha/R-map-api-data/blob/master/images/Rplot4.png)
 
+I find the background distracting, so let's remove it one element at a time.
+
+```R
+gg <- gg + theme(panel.grid.major = element_blank(), 
+                 panel.grid.minor = element_blank(), 
+                 panel.background = element_blank(),
+                 axis.text.x = element_blank(),
+                 axis.text.y = element_blank(),
+                 axis.ticks = element_blank())
+gg
+```
+
+![plot 5](https://github.com/jonas-raposinha/R-map-api-data/blob/master/images/Rplot5.png)
+
 
 ```R
 ---under construction---
