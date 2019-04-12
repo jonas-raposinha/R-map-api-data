@@ -179,6 +179,14 @@ gg <- ggplot() + geom_polygon(data=shapefile_df, aes(x=long, y=lat, group = grou
 ```
 ![plot 2](https://github.com/jonas-raposinha/R-map-api-data/blob/master/images/Rplot2.png)
 
+We do need to fix the gradient though, since darker colours better represent higher numbers than vice versa. We specify this through scale_fill_gradient(), in which we can also add a title to the gradient legend. The neat thing about ggplot() is that we can just keep adding stuff to the plot object that we created. I like to use str_wrap() to force new lines in plots texts. There are other ways but this one plays well with sprintf() that I often use to include data into the string (as with the caption below).
+
+```R
+gg <- gg + scale_fill_gradient(name = str_wrap(“Prescriptions/1000 inhabitants”, 20), low = "steelblue1", high = "midnightblue", guide = "colourbar")
+gg
+```
+
+
 
 ```R
 ---under construction---
