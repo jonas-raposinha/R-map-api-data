@@ -114,6 +114,20 @@ Next, we summarize using group_by() to lock all variables except ageId.
 ```R
 use_plot <-
  use_raw %>%
+ group_by(regionId, sexId, ATC) %>%
+ summarise(exp = sum(exp))
+```
+
+This is repeated for the population data, followed by matching the two data sets by right_join(), calculating the ratio using mutate() and then filtering to only include data for “both sexes”. Note that we need to ungroup() before we can remove grouped variables.
+
+```R
+use_plot <-
+  pop_raw %>%
   group_by(regionId, sexId, ATC) %>%
-  summarise(exp = sum(exp))
+  summarise(pop = sum(pop)) %>%
+  right_join(use_plot, by = c("regionId", "sexId")) %>%
+  mutate(exp_per_1000 = exp/pop*1000) %>%
+  filter(sexId == 3) %>% #’3’ codes for “both sexes”
+  ungroup() %>%
+  select(regionId, exp_per_1000) 
 ```
