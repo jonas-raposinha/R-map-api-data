@@ -109,3 +109,11 @@ pop_raw$varde <- as.numeric(pop_raw$varde)
 colnames(pop_raw) <- c("ATC", "regionId", "ageId", "sexId", "pop")
 ```
 
+Next, we summarize using group_by() to lock all variables except ageId.
+
+```R
+use_plot <-
+ use_raw %>%
+  group_by(regionId, sexId, ATC) %>%
+  summarise(exp = sum(exp))
+```
