@@ -137,12 +137,12 @@ Next, we need a map of Sweden map, eg the one assembled by [ESRI Sweden](https:/
 ```R
 shp.sweden <- readOGR(dsn = "Lan_SCB", layer = "Länsgränser_SCB_07") 
 class(shp.sweden)
- [1] "SpatialPolygonsDataFrame"
- attr(,"package")
- [1] "sp"
+> [1] "SpatialPolygonsDataFrame"
+> attr(,"package")
+> [1] "sp"
 shapefile_df <- broom::tidy(shp.sweden)
 class(shapefile_df)
- [1] "tbl_df"     "tbl"        "data.frame"
+> [1] "tbl_df"     "tbl"        "data.frame"
 shapefile_df$id <- as.integer(shapefile_df$id)
 ```
 
@@ -156,7 +156,9 @@ use_plot <- #Change the regional codes to fit the shapefile format
   use_plot %>%
   right_join(lan_map, by = c("regionId")) %>%
   select(-regionId)
-shapefile_df <- 
-  shapefile_df %>%
-  right_join(use_plot, by = c("id" = "region")) #Match data to shapefile codes
 ```
+Then we can go ahead and plot it using ggplot() and geom_polygon(), which draws regions connected by lines. The 'x' and 'y' are provided by longitudes and latitudes from the map file.
+```R
+ggplot() + geom_polygon(data=shapefile_df, aes(x=long, y=lat, group = group))
+```
+![plot 1](https://github.com/jonas-raposinha/r-map-plotting/blob/master/images/1.png)
