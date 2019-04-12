@@ -163,3 +163,16 @@ use_plot <- #Change the regional codes to fit the shapefile format
   right_join(lan_map, by = c("regionId")) %>%
   select(-regionId)
 ```
+
+That came out ok, so let’s go ahead and match the data to the correct region (coded as “id” in the shapefile).
+
+```R
+shapefile_df <- 
+  shapefile_df %>%
+  right_join(use_plot, by = c("id" = "region")) #Match data to shapefile codes
+```
+
+
+R```
+---under construction---
+```
