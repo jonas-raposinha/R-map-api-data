@@ -161,4 +161,4 @@ Then we can go ahead and plot it using ggplot() and geom_polygon(), which draws 
 ```R
 ggplot() + geom_polygon(data=shapefile_df, aes(x=long, y=lat, group = group))
 ```
-![plot 1](https://github.com/jonas-raposinha/r-map-plotting/blob/master/images/1.png)
+![plot 1](https://github.com/jonas-raposinha/r-map-apir-data/blob/master/images/Rplot1.png)
