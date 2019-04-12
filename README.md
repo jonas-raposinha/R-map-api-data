@@ -47,8 +47,8 @@ Interpreting the JSON format gives us a list, from which we can extract the data
     rawToChar() %>%
     fromJSON()
 names(read.content)
-[1] "data"            "amne"            "nasta_sida"      "foregaende_sida" "sida"            "per_sida"       
-[7] "sidor"          
+> [1] "data"            "amne"            "nasta_sida"      "foregaende_sida" "sida"            "per_sida"       
+> [7] "sidor"          
 use_raw <-
   read.content$data %>%
   data.frame()
@@ -70,4 +70,26 @@ use_raw <-
   select(-c(mattId, ar))
 use_raw$varde <- as.numeric(use_raw$varde)
 colnames(use_raw) <- c("ATC", "regionId", "ageId","sexId", "exp")
+```
+
+Next, I’ll give two specific examples of the usefulness of process automation. The first relates to data access, as SBHW’s database limits output to 5000 rows per query and making repeated queries manually can be very tedious. When using the API though, we can simply create a loop that checks the number of rows returned, and if it’s 5000, makes another query until we get the entire chunk of data. The query order is indicated at the end of ‘path’, kind of like a page number.
+
+```R
+iter <- 2 #Iter variable to indicate the query number
+while(nrow(read.content$data) == 5000){
+  path <- 
+sprintf("/api/v1/sv/lakemedel/resultat/matt/3/atc/J01 /region/ar/2017?sida=%i", iter) #In this case not needed since that query yields < 5000 rows
+  raw.search <- GET(url = url, path = path)
+  read.content <- 
+    raw.search$content %>%
+    rawToChar() %>%
+    fromJSON()
+  use_temp <-
+    read.content$data %>%
+    data.frame() 
+  use_raw <-
+    use_raw %>%
+    rbind(use_temp)
+  iter <- iter + 1
+}
 ```
