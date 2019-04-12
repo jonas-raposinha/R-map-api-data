@@ -132,7 +132,21 @@ use_plot <-
   select(regionId, exp_per_1000) 
 ```
 
-Back to the task at hand. The regional codes are different in the shapefile and our data, so we need to match them.
+Next, we need a map of Sweden map, eg the one assembled by [ESRI Sweden](https://www.arcgis.com/home/item.html?id=912b806e3b864b5f83596575a2f7cb01). All packages within the Tidyverse (including ggplot2) like data to be ["tidy"](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html), which shapefile data are not. Fortunately, they have made the conversion easy for us. We should not forget to change the class of the region Id’s to ‘integer’ in order to match them later.
+
+```R
+shp.sweden <- readOGR(dsn = "Lan_SCB", layer = "Länsgränser_SCB_07") 
+class(shp.sweden)
+ [1] "SpatialPolygonsDataFrame"
+ attr(,"package")
+ [1] "sp"
+shapefile_df <- broom::tidy(shp.sweden)
+class(shapefile_df)
+ [1] "tbl_df"     "tbl"        "data.frame"
+shapefile_df$id <- as.integer(shapefile_df$id)
+```
+
+The regional codes are different in the shapefile and our data, so we need to match them.
 
 ```R
 lan_map <- #Create a LUT for the regional codes
