@@ -146,6 +146,12 @@ class(shapefile_df)
 shapefile_df$id <- as.integer(shapefile_df$id)
 ```
 
+Then we can go ahead and plot it using ggplot() and geom_polygon(), which draws regions connected by lines. The 'x' and 'y' are provided by longitudes and latitudes from the map file.
+```R
+ggplot() + geom_polygon(data=shapefile_df, aes(x=long, y=lat, group = group))
+```
+![plot 1](https://github.com/jonas-raposinha/R-map-api-data/blob/master/images/Rplot1.png)
+
 The regional codes are different in the shapefile and our data, so we need to match them.
 
 ```R
@@ -157,8 +163,3 @@ use_plot <- #Change the regional codes to fit the shapefile format
   right_join(lan_map, by = c("regionId")) %>%
   select(-regionId)
 ```
-Then we can go ahead and plot it using ggplot() and geom_polygon(), which draws regions connected by lines. The 'x' and 'y' are provided by longitudes and latitudes from the map file.
-```R
-ggplot() + geom_polygon(data=shapefile_df, aes(x=long, y=lat, group = group))
-```
-![plot 1](https://github.com/jonas-raposinha/R-map-api-data/blob/master/images/Rplot1.png)
