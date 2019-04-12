@@ -14,8 +14,7 @@ To download data using the SBHW’s API, we need the API url and the data path. 
 
 ```R
 url <- "http://sdb.socialstyrelsen.se/api"
-path <- "/api/v1/sv/lakemedel/resultat/matt/3/atc/J01/region/0,1,3,4,5,6,7,8,9,10,12,13,14,17,18,19,20,21,22,23,24,25/ar/2017" 
-#database = ”lakemedel”, output = ”resultat”, measure = ”matt 3”, class = ”atc J01”, region = all regions by numbers, year = ”ar 2017”
+path <- "/api/v1/sv/lakemedel/resultat/matt/3/atc/J01/region/0,1,3,4,5,6,7,8,9,10,12,13,14,17,18,19,20,21,22,23,24,25/ar/2017" #database = "lakemedel", output = "resultat", measure = "matt 3", class = "atc J01", region = all regions by numbers, year = "ar 2017"
 ```
 
 Now we are ready to query the API. Downloading data is done by the GET() call.
@@ -34,9 +33,9 @@ The result is a list of class "response", the content of which tells us that the
 
 ```R
 raw.search$content %>%
-rawToChar() %>% 
-substr(start = 1, stop = 50) 
-[1] "{\"data\":[{\"atcId\":\"J01\",\"regionId\":0,\"alderId\":1,\""
+  rawToChar() %>% 
+  substr(start = 1, stop = 50) 
+> [1] "{\"data\":[{\"atcId\":\"J01\",\"regionId\":0,\"alderId\":1,\""
 ```
 
 Interpreting the JSON format gives us a list, from which we can extract the data.
