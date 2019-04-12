@@ -185,7 +185,7 @@ We do need to fix the gradient though, since darker colours better represent hig
 gg <- gg + scale_fill_gradient(name = str_wrap(“Prescriptions/1000 inhabitants”, 20), low = "steelblue1", high = "midnightblue", guide = "colourbar")
 gg
 ```
-
+![plot 3](https://github.com/jonas-raposinha/r-map-plotting/blob/master/images/3.png)
 
 
 ```R
