@@ -10,7 +10,7 @@ library(jsonlite) #Interprets the commonly used JSON format to R objects
 library(rgdal) #Package for handling maps in the very useful shapefile format
 ```
 
-To download data using the SBHW’s API, we need the API url and the data path. Depending on how well documented an API is, these things may be more or less easy to figure out. In the case of SBHW, the database actually consists of several databases for different areas, such as causes of death, obstetrics, dentistry or pharmaceuticals, antibiotics belonging to the latter one (coded as “lakemedel”). Then we need to define what data are needed to produce our desired graph and how those are coded in the database. As we wish to plot the total amount of antibiotics consumed in Sweden, we of course need to specify the pharmacuetial class (coded as "atc") and some appropriate measure of antibiotic consumption (coded as “matt” in the database) stratified by region (coded as "region"). Finally, we need to specify the year the data represents (coded as "ar"), the most recent being 2017. Incidentally, this is the only variable that we will need to change in order to remake the graph next year. We can thus define the url and path. Side note: the measure “matt 3” codes for the number of expedited antibiotic prescriptions.
+To download data using the SBHW’s API, we need the API url and the data path. Depending on how well documented an API is, these things may be more or less easy to figure out. In the case of SBHW, the database actually consists of several databases for different areas, such as causes of death, obstetrics, dentistry or pharmaceuticals, antibiotics belonging to the latter one (coded as “lakemedel”). Then we need to define what data are needed to produce our desired graph and how those are coded in the database. As we wish to plot the total amount of antibiotics consumed in Sweden, we of course need to specify the pharmacuetial class (coded as "atc") and some appropriate measure of antibiotic consumption (coded as "matt" in the database) stratified by region (coded as "region"). Finally, we need to specify the year the data represents (coded as "ar"), the most recent being 2017. Incidentally, this is the only variable that we will need to change in order to remake the graph next year. We can thus define the url and path. Side note: the measure "matt 3" codes for the number of expedited antibiotic prescriptions.
 
 ```R
 url <- "http://sdb.socialstyrelsen.se/api"
@@ -53,11 +53,21 @@ use_raw <-
   read.content$data %>%
   data.frame()
 head(use_raw)
-  atcId regionId alderId konId   ar  varde
-1   J01        0       1     1 2017 107894
-2   J01        0       1     2 2017  93992
-3   J01        0       1     3 2017 201886
-4   J01        0       2     1 2017  73754
-5   J01        0       2     2 2017  81052
-6   J01        0       2     3 2017 154806
+>  atcId regionId alderId konId   ar  varde
+> 1   J01        0       1     1 2017 107894
+> 2   J01        0       1     2 2017  93992
+> 3   J01        0       1     3 2017 201886
+> 4   J01        0       2     1 2017  73754
+> 5   J01        0       2     2 2017  81052
+> 6   J01        0       2     3 2017 154806
+```
+
+Let's fix it up a bit by dropping unnecessary variables, changing our measure to 'numeric' and renaming the columns to something easy to understand.
+
+```R
+use_raw <-  
+  use_raw %>% 
+  select(-c(mattId, ar))
+use_raw$varde <- as.numeric(use_raw$varde)
+colnames(use_raw) <- c("ATC", "regionId", "ageId","sexId", "exp")
 ```
