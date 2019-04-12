@@ -19,3 +19,13 @@ path <- "/api/v1/sv/lakemedel/resultat/matt/3/atc/J01/region/0,1,3,4,5,6,7,8,9,1
 ```
 
 Now we are ready to query the API. Downloading data is done by the GET() call.
+
+```R
+raw.search <- GET(url = url, path = path)
+> raw.search
+Response [http://sdb.socialstyrelsen.se/api/v1/sv/lakemedel/resultat/matt/3/atc/J01/region/0,1,3,4,5,6,7,8,9,10,12,13,14,17,18,19,20,21,22,23,24,25/ar/2017]
+ 	Date: 2019-04-08 11:30
+  	Status: 200
+  	Content-Type: application/json; charset=utf-8
+  	Size: 457 kB
+```
