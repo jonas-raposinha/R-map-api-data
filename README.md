@@ -30,3 +30,12 @@ Response [http://sdb.socialstyrelsen.se/api/v1/sv/lakemedel/resultat/matt/3/atc/
   	Size: 457 kB
 ```
 The result is a list of class “response”, the content of which tells us that the query was successful (status code “200”) and that it’s in JSON format. Further information on http status codes can be found [here](https://restfulapi.net/http-status-codes/). The data we are after are found in raw format in the “content” component, which can be turned into a character string using rawToChar().
+
+```R
+raw.search$content %>%
+rawToChar() %>% 
+substr(start = 1, stop = 50) 
+[1] "{\"data\":[{\"atcId\":\"J01\",\"regionId\":0,\"alderId\":1,\""
+```
+
+Interpreting the JSON format gives us a list, from which we can extract the data.
