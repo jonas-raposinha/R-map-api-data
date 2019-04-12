@@ -187,6 +187,15 @@ gg
 ```
 ![plot 3](https://github.com/jonas-raposinha/R-map-api-data/blob/master/images/Rplot3.png)
 
+That's better. Now we take care of the axis labels and add a caption.
+
+```R
+caption_text <- sprintf(“Source: Swedish Board of Health and Welfare, %s”, Sys.Date())
+gg <- gg + labs(title=str_wrap("Regional antibiotics consumption in Sweden, all ages, both sexes for 2017", 45), y="", x="", caption = caption_text)
+```
+
+![plot 4](https://github.com/jonas-raposinha/r-map-plotting/blob/master/images/4.png)
+
 
 ```R
 ---under construction---
