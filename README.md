@@ -210,7 +210,19 @@ gg
 
 ![plot 5](https://github.com/jonas-raposinha/R-map-api-data/blob/master/images/Rplot5.png)
 
+Finally, it's time to print the plot (with some adjustments to text sizes for readability).
 
 ```R
----under construction---
+gg <- gg + theme(plot.title = element_text(size = 24, face = "bold", lineheight = 1.2),
+                 plot.caption = element_text(size = 20, hjust = -0.1),
+                 legend.title = element_text(size = 20, face = "bold"),
+                 legend.text = element_text(size = 20),
+                 legend.key.size = unit(2, "cm")) 
+pdf("swemap.pdf", w=10, h=15, pointsize = 1) #Sets an aspect ratio that fits the plot
+gg
+dev.off()
 ```
+
+![plot 6](https://github.com/jonas-raposinha/R-map-api-data/blob/master/images/Rplot6.png)
+
+As we can see, ggplot() has a somewhat more logical syntax than base plot, (at least once you get used to it), and setting up a gradient map like this one is quite straight forward. For more customized plots though, I still prefer base plot (along with its idiosyncrasies).
