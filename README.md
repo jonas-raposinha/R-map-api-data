@@ -131,3 +131,18 @@ use_plot <-
   ungroup() %>%
   select(regionId, exp_per_1000) 
 ```
+
+Back to the task at hand. The regional codes are different in the shapefile and our data, so we need to match them.
+
+```R
+lan_map <- #Create a LUT for the regional codes
+  data.frame(regionId = unique(use_raw$regionId))
+lan_map$region <- 0:20
+use_plot <- #Change the regional codes to fit the shapefile format
+  use_plot %>%
+  right_join(lan_map, by = c("regionId")) %>%
+  select(-regionId)
+shapefile_df <- 
+  shapefile_df %>%
+  right_join(use_plot, by = c("id" = "region")) #Match data to shapefile codes
+```
