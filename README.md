@@ -9,3 +9,12 @@ library(httr) #Handles communication with the API
 library(jsonlite) #Interprets the commonly used JSON format to R objects
 library(rgdal) #Package for handling maps in the very useful shapefile format
 ```
+
+To download data using the SBHW’s API, we need the API url and the data path. Depending on how well documented an API is, these things may be more or less easy to figure out. In the case of SBHW, the database actually consists of several databases for different areas, such as causes of death, obstetrics, dentistry or pharmaceuticals, antibiotics belonging to the latter one (coded as “lakemedel”). Then we need to define what data are needed to produce our desired graph and how those are coded in the database. As we wish to plot the total amount of antibiotics consumed in Sweden, we of course need to specify the pharmacuetial class (coded as "atc") and some appropriate measure of antibiotic consumption (coded as “matt” in the database) stratified by region (coded as "region"). Finally, we need to specify the year the data represents (coded as "ar"), the most recent being 2017. Incidentally, this is the only variable that we will need to change in order to remake the graph next year. We can thus define the url and path.
+
+```R
+url <- "http://sdb.socialstyrelsen.se/api"
+path <- "/api/v1/sv/lakemedel/resultat/matt/3/atc/J01/region/0,1,3,4,5,6,7,8,9,10,12,13,14,17,18,19,20,21,22,23,24,25/ar/2017" 
+#database = ”lakemedel”, output = ”resultat”, measure = ”matt 3”, class = ”atc J01”, region = all regions by numbers, year = ”ar 2017”
+```
+
