@@ -172,7 +172,14 @@ shapefile_df <-
   right_join(use_plot, by = c("id" = "region")) #Match data to shapefile codes
 ```
 
+Time to plot the data, indicated by 'fill', while 'colour' refers to the map borders.
 
-R```
+```R
+gg <- ggplot() + geom_polygon(data=shapefile_df, aes(x=long, y=lat, group = group, fill = shapefile_df$exp_per_1000), size = 0.1, colour="black")
+```
+![plot 2](https://github.com/jonas-raposinha/R-map-api-data/blob/master/images/Rplot2.png)
+
+
+```R
 ---under construction---
 ```
