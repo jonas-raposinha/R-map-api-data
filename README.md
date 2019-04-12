@@ -24,8 +24,9 @@ Now we are ready to query the API. Downloading data is done by the GET() call.
 raw.search <- GET(url = url, path = path)
 > raw.search
 Response [http://sdb.socialstyrelsen.se/api/v1/sv/lakemedel/resultat/matt/3/atc/J01/region/0,1,3,4,5,6,7,8,9,10,12,13,14,17,18,19,20,21,22,23,24,25/ar/2017]
- 	Date: 2019-04-08 11:30
+ 	Date: 2019-04-12 11:30
   	Status: 200
   	Content-Type: application/json; charset=utf-8
   	Size: 457 kB
 ```
+The result is a list of class “response”, the content of which tells us that the query was successful (status code “200”) and that it’s in JSON format. Further information on http status codes can be found [here](https://restfulapi.net/http-status-codes/). The data we are after are found in raw format in the “content” component, which can be turned into a character string using rawToChar().
