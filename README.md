@@ -23,7 +23,7 @@ Now we are ready to query the API. Downloading data is done by the GET() call.
 raw.search <- GET(url = url, path = path)
 raw.search
 > Response
-> [http://sdb.socialstyrelsen.se/api/v1/sv/lakemedel/resultat/matt/3/atc/J01/region/0,1,3,4,5,6,7,8,9,10,12,13,14,17,18,19,20,21,22,23,24,25/ar/2017]
+> [http://sdb.socialstyrelsen.se/api/v1/sv/lakemedel/resultat/matt/3/atc/J01/region/1,3,4,5,6,7,8,9,10,12,13,14,17,18,19,20,21,22,23,24,25/ar/2017]
 > 	Date: 2019-04-12 11:30
 >  	Status: 200
 >  	Content-Type: application/json; charset=utf-8
@@ -76,7 +76,7 @@ Next, I’ll give two specific examples of the usefulness of process automation.
 ```R
 iter <- 2 #Iter variable to indicate the query number
 while(nrow(read.content$data) == 5000){
-  path <- sprintf("/api/v1/sv/lakemedel/resultat/matt/3/atc/J01 /region/ar/2017?sida=%i", iter) #In this case not needed since that query yields < 5000 rows
+  path <- sprintf("/api/v1/sv/lakemedel/resultat/matt/3/atc/J01/region/0,1,3,4,5,6,7,8,9,10,12,13,14,17,18,19,20,21,22,23,24,25/ar/2017?sida=%i", iter) #In this case not needed since that query yields < 5000 rows
   raw.search <- GET(url = url, path = path)
   read.content <- 
     raw.search$content %>%
@@ -94,7 +94,7 @@ while(nrow(read.content$data) == 5000){
 
 The second example concerns data processing. Say that we would like to report the total consumption with a denominator of per 1000 inhabitants. To do this, we first need to download the relevant population sizes. These happen to be included as a measure in the SBHW database, but unfortunately we can only download one measure per query (due to some unknown peculiarity). No worries, we will simply get them the same way we got the current measure.
 ```R
-path <- "/api/v1/sv/lakemedel/resultat/matt/9/atc/J01/region/0,1,3,4,5,6,7,8,9,10,12,13,14,17,18,19,20,21,22,23,24,25/ar/2017" #Measure "9" is population size
+path <- "/api/v1/sv/lakemedel/resultat/matt/9/atc/J01/region/1,3,4,5,6,7,8,9,10,12,13,14,17,18,19,20,21,22,23,24,25/ar/2017" #Measure "9" is population size
 raw.search <- GET(url = url, path = path)
 read.content <- 
   raw.search$content %>%
